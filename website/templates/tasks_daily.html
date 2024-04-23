@@ -5,13 +5,35 @@
 {% block content %}
 <div class="container mt-5 center-content">
   <h1 class="text-center">Daily Tasks</h1>
-  <p class="mt-4">
-    Manage your Daily Tasks here!
-  </p>
-
+  <form method="POST" id="add-task-form">
+    <input type="text" name="task" placeholder="Add a new daily task" required>
+    <button type="submit">Add Task</button>
+  </form>
   <div id="checklist">
-
+    {% for task in tasks %}
+      <input type="checkbox" value="{{ task.id }}" id="task-{{ task.id }}" name="task">
+      <label for="task-{{ task.id }}" onclick="handleCheck({{ task.id }})">{{ task.data }}</label>
+    {% endfor %}
   </div>
 </div>
+
+<script>
+function handleCheck(taskId) {
+  const checkbox = document.getElementById('task-' + taskId);
+  if (checkbox.checked) {
+    // If checked, send a request to delete the task
+    fetch('/delete_task/' + taskId, {
+      method: 'POST'
+    }).then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          checkbox.parentElement.removeChild(checkbox);
+          const label = document.querySelector('label[for="task-' + taskId + '"]');
+          label.parentElement.removeChild(label);
+        }
+      });
+  }
+}
+</script>
 
 {% endblock %}

@@ -5,12 +5,12 @@
 {% block content %}
 <div class="container mt-5 center-content">
   <h1 class="text-center">Weekly Tasks</h1>
-  <p class="mt-4">
-    Track & Complete these tasks! 🚀
-  </p>
-
+  <form method="POST">
+    <input type="text" name="task" placeholder="Add a new Weekly task" required>
+    <button type="submit">Add Task</button>
+  </form>
   <div id="checklist">
-
+    <!-- Existing tasks can be listed here -->
   </div>
 </div>
 
