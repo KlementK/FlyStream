@@ -1,21 +1,40 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
 <h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
-  <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
+
+<!-- Cards Section -->
+<div class="container mt-5">
+  <h2 align="center">Cards</h2>
+  <div class="card-container d-flex justify-content-center align-items-center">
+    <div class="card" id="daily">Daily</div>
+    <div class="card" id="weekly">Weekly</div>
+    <div class="card" id="monthly">Monthly</div>
   </div>
-</form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      card.addEventListener('mouseover', () => {
+        cards.forEach(c => {
+          if (c !== card) {
+            c.style.filter = 'blur(2px)';
+          }
+        });
+      });
+
+      card.addEventListener('mouseout', () => {
+        cards.forEach(c => {
+          c.style.filter = 'none';
+        });
+      });
+    });
+  });
+</script>
 {% endblock %}
