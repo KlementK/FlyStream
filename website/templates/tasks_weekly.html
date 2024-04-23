@@ -1,17 +1,47 @@
-{% extends "base.html" %}
-
-{% block title %}Weekly Tasks{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Weekly Tasks{% endblock %} {% block
+content %}
 <div class="container mt-5 center-content">
   <h1 class="text-center">Weekly Tasks</h1>
-  <form method="POST">
-    <input type="text" name="task" placeholder="Add a new Weekly task" required>
-    <button type="submit">Add Task</button>
+  <form method="POST" id="add-task-form">
+    <input
+      type="text"
+      name="task"
+      placeholder="Add a new weekly task"
+      required
+    />
   </form>
-  <div id="checklist">
-    <!-- Existing tasks can be listed here -->
+  <div class="tasklist">
+    {% for task in tasks %}
+    <input
+      type="checkbox"
+      value="{{ task.id }}"
+      id="task-{{ task.id }}"
+      name="task"
+    />
+    <label for="task-{{ task.id }}" onclick="handleCheck({{ task.id }})"
+      >{{ task.data }}</label
+    >
+    {% endfor %}
   </div>
 </div>
+
+<script>
+  function handleCheck(taskId) {
+    const checkbox = document.getElementById("task-" + taskId);
+    if (checkbox.checked) {
+      fetch("/delete_task/" + taskId, { method: "POST" })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            checkbox.parentElement.removeChild(checkbox);
+            const label = document.querySelector(
+              'label[for="task-' + taskId + '"]'
+            );
+            label.parentElement.removeChild(label);
+          }
+        });
+    }
+  }
+</script>
 
 {% endblock %}
