@@ -17,14 +17,13 @@
     font-weight: bolder;
     color: black;
     margin: 10px;
-  }
-  
-  .card:hover {
+}
+
+.card:hover {
     border: 1px solid black;
     transform: scale(1.05);
-  }
-  
-  .card:active {
+}
+
+.card:active {
     transform: scale(0.95) rotateZ(1.7deg);
-  }
-  
+}

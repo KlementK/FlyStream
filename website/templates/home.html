@@ -1,11 +1,10 @@
-{% extends "base.html" %} 
-{% block title %}Home{% endblock %} 
-{% block content %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
 
 <!-- Cards Section -->
 <div class="container mt-5">
   <h1 class="text-center">FlyStream</h1>
-  
+
   <div class="card-container d-flex justify-content-center align-items-center">
     <div class="card" id="daily">Daily</div>
     <div class="card" id="weekly">Weekly</div>
@@ -13,32 +12,29 @@
   </div>
 </div>
 
-{% endblock %}
-
-{% block javascript %}
+{% endblock %} {% block javascript %}
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll('.card');
+    const cards = document.querySelectorAll(".card");
 
-    cards.forEach(card => {
-      card.addEventListener('mouseover', () => {
-        cards.forEach(c => {
+    cards.forEach((card) => {
+      card.addEventListener("mouseover", () => {
+        cards.forEach((c) => {
           if (c !== card) {
-            c.style.filter = 'blur(2px)';
+            c.style.filter = "blur(2px)";
           }
         });
       });
 
-      card.addEventListener('mouseout', () => {
-        cards.forEach(c => {
-          c.style.filter = 'none';
+      card.addEventListener("mouseout", () => {
+        cards.forEach((c) => {
+          c.style.filter = "none";
         });
       });
 
-      card.addEventListener('click', () => {
+      card.addEventListener("click", () => {
         const cardId = card.id;
         let redirectUrl = "";
-
         switch (cardId) {
           case "daily":
             redirectUrl = "/tasks_daily";
@@ -53,7 +49,6 @@
             redirectUrl = "/";
             break;
         }
-
         window.location.href = redirectUrl;
       });
     });
