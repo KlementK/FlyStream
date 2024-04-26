@@ -1,57 +1,34 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+<!-- home.html -->
 
-<!-- Cards Section -->
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content%}
+
+<!-- cards -->
 <div class="container mt-5">
   <h1 class="text-center">FlyStream</h1>
 
   <div class="card-container d-flex justify-content-center align-items-center">
-    <div class="card" id="daily">Daily</div>
-    <div class="card" id="weekly">Weekly</div>
-    <div class="card" id="monthly">Monthly</div>
+    <a href="/tasks_daily" class="card" id="daily">Daily</a>
+    <a href="/tasks_weekly" class="card" id="weekly">Weekly</a>
+    <a href="/tasks_monthly" class="card" id="monthly">Monthly</a>
   </div>
 </div>
 
-{% endblock %} {% block javascript %}
-<script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach((card) => {
-      card.addEventListener("mouseover", () => {
-        cards.forEach((c) => {
-          if (c !== card) {
-            c.style.filter = "blur(2px)";
-          }
-        });
+<!-- blur Script -->
+<script>
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("mouseover", function () {
+      document.querySelectorAll(".card").forEach((c) => {
+        if (c !== this) c.classList.add("card-blur");
       });
+    });
 
-      card.addEventListener("mouseout", () => {
-        cards.forEach((c) => {
-          c.style.filter = "none";
-        });
-      });
-
-      card.addEventListener("click", () => {
-        const cardId = card.id;
-        let redirectUrl = "";
-        switch (cardId) {
-          case "daily":
-            redirectUrl = "/tasks_daily";
-            break;
-          case "weekly":
-            redirectUrl = "/tasks_weekly";
-            break;
-          case "monthly":
-            redirectUrl = "/tasks_monthly";
-            break;
-          default:
-            redirectUrl = "/";
-            break;
-        }
-        window.location.href = redirectUrl;
+    card.addEventListener("mouseout", function () {
+      document.querySelectorAll(".card").forEach((c) => {
+        c.classList.remove("card-blur");
       });
     });
   });
 </script>
+
 {% endblock %}

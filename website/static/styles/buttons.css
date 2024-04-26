@@ -1,3 +1,5 @@
+/* buttons.css */
+
 .Btn {
   display: flex;
   align-items: center;
@@ -11,27 +13,9 @@
   overflow: hidden;
   transition-duration: .3s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(163, 142, 255); /* blue color */
 }
 
-.logoutBtn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition-duration: .3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: rgb(255, 65, 65);
-}
-
-/* icon stuff */
-
+/* svg / icon */
 .sign {
   width: 100%;
   transition-duration: .3s;
@@ -49,7 +33,6 @@
 }
 
 /* text */
-
 .text {
   position: absolute;
   right: 0%;
@@ -62,21 +45,20 @@
 }
 
 
-.Btn:hover, .logoutBtn:hover {
+.Btn:hover {
   width: 120px;
   border-radius: 40px;
   transition-duration: .3s;
 }
 
-.Btn:hover .sign, .logoutBtn:hover .sign {
+.Btn:hover .sign {
   width: 30%;
   transition-duration: .3s;
   padding-left: 20px;
 }
 
 /* hover effect button's text */
-
-.Btn:hover .text, .logoutBtn:hover .text {
+.Btn:hover .text {
   opacity: 1;
   width: 70%;
   transition-duration: .3s;
@@ -84,13 +66,11 @@
 }
 
 /* button click effect*/
-
-.Btn:active, .logoutBtn:active {
+.Btn:active {
   transform: translate(2px ,2px);
 }
 
-/* rainbow hell yeah */
-
+/* submit button */
 .RainbowBtn {
   width: 120px;
   height: 40px;
