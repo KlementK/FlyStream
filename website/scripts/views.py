@@ -1,9 +1,17 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+# views.py
+
+from flask import Blueprint, render_template, request, flash, jsonify, current_app
 from flask_login import login_required, current_user
 from .models import Task
+from .svg_paths import svg_paths
 from . import db
 
 views = Blueprint('views', __name__)
+
+# context processor to make `svg_paths` global
+@views.app_context_processor
+def inject_svg_paths():
+    return dict(svgs=svg_paths)
 
 @views.route('/about', methods=['GET'])
 def about():

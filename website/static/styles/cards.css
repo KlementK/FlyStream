@@ -28,5 +28,5 @@
 }
 
 .card-blur {
-    filter: blur(2px);
+    filter: blur(0.75px);
 }

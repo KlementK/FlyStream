@@ -1,3 +1,5 @@
+# auth.py
+
 from . import db
 from . import bcrypt  
 from .models import User
@@ -26,10 +28,8 @@ def sign_up():
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
-            #
             hashed_password = bcrypt.generate_password_hash(password1).decode('utf-8')
             new_user = User(email=email, first_name=first_name, password=hashed_password)
-            #
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
