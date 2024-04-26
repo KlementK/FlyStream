@@ -28,54 +28,28 @@ def home():
 def tasks_daily():
     if request.method == 'POST':
         task_content = request.form.get('task')
-        if len(task_content) < 1:
-            flash('Task is too short!', category='error')
-            print("Error: Task is too short")
-        else:
-            new_task = Task(type='daily', data=task_content, user_id=current_user.id)
-            db.session.add(new_task)
-            try:
-                db.session.commit()
-                # flash('Daily task added!', category='success')
-                # print(f"Task added successfully: {new_task}")
-            except Exception as e:
-                db.session.rollback()
-                print(f"Error adding task to database: {e}")
-
-    # Retrieve all tasks for the current user
-    tasks = Task.query.filter_by(user_id=current_user.id, type='daily').all()
-    # print(f"Tasks retrieved for display: {tasks}")
+        add_task(current_user.id, task_content, 'daily')
+    tasks = get_tasks(current_user.id, 'daily')
     return render_template("tasks_daily.html", user=current_user, tasks=tasks)
-
 
 @views.route('/tasks_weekly', methods=['GET', 'POST'])
 @login_required
 def tasks_weekly():
     if request.method == 'POST':
         task_content = request.form.get('task')
-        if len(task_content) < 1:
-            flash('Task is too short!', category='error')
-        else:
-            new_task = Task(type='weekly', data=task_content, user_id=current_user.id)
-            db.session.add(new_task)
-            db.session.commit()
-    tasks = Task.query.filter_by(user_id=current_user.id, type='weekly').all()
+        add_task(current_user.id, task_content, 'weekly')
+    tasks = get_tasks(current_user.id, 'weekly')
     return render_template("tasks_weekly.html", user=current_user, tasks=tasks)
-
 
 @views.route('/tasks_monthly', methods=['GET', 'POST'])
 @login_required
 def tasks_monthly():
     if request.method == 'POST':
         task_content = request.form.get('task')
-        if len(task_content) < 1:
-            flash('Task is too short!', category='error')
-        else:
-            new_task = Task(type='monthly', data=task_content, user_id=current_user.id)
-            db.session.add(new_task)
-            db.session.commit()
-    tasks = Task.query.filter_by(user_id=current_user.id, type='monthly').all()
+        add_task(current_user.id, task_content, 'monthly')
+    tasks = get_tasks(current_user.id, 'monthly')
     return render_template("tasks_monthly.html", user=current_user, tasks=tasks)
+
 
 
 @views.route('/delete_task/<int:task_id>', methods=['POST'])
@@ -87,3 +61,23 @@ def delete_task(task_id):
         db.session.commit()
         return jsonify({'success': True})
     return jsonify({'success': False}), 403
+
+#
+
+def get_tasks(user_id, task_type):
+    return Task.query.filter_by(user_id=user_id, type=task_type).all()
+
+def add_task(user_id, task_content, task_type):
+    if len(task_content) < 1:
+        flash('Task is too short!', category='error')
+        return False
+    new_task = Task(type=task_type, data=task_content, user_id=user_id)
+    db.session.add(new_task)
+    try:
+        db.session.commit()
+        flash('Task added successfully!', category='success')
+        return True
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error adding task to database: {e}")
+        return False
