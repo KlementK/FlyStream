@@ -1,3 +1,5 @@
+# main.py
+
 from website.scripts import create_app
 
 app = create_app()
